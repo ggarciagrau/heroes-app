@@ -2,14 +2,17 @@ import { useLocation, useNavigate } from "react-router-dom";
 import queryString from "query-string";
 import { useForm } from "../../../hooks/useForm";
 import { HeroeCard } from "../components";
+import { getHeroesByName } from "../helpers";
 
 export const SearchPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { q = "" } = queryString.parse(location.search);
 
+  const heroes = getHeroesByName(q);
+
   const { searchText, onInputChange } = useForm({
-    searchText: "",
+    searchText: q,
   });
 
   const onSearchSubmit = (e) => {
@@ -17,7 +20,7 @@ export const SearchPage = () => {
 
     const searchValue = searchText.trim();
 
-    if (searchValue.length <= 1) return;
+    if (searchValue.length < 1) return;
 
     navigate(`?q=${searchValue}`);
   };
@@ -50,11 +53,20 @@ export const SearchPage = () => {
         <div className="col-7">
           <h4>Results</h4>
           <hr />
-          <div className="alert alert-primary">Search a hero</div>
-          <div className="alert alert-danger">
-            There isn't results with <b>{q}</b>
-          </div>
-          <HeroeCard />
+
+          {q.length == 0 ? (
+            <div className="alert alert-primary">Search a hero</div>
+          ) : null}
+
+          {heroes.length
+            ? heroes.map((hero) => <HeroeCard key={hero.id} {...hero} />)
+            : null}
+
+          {!heroes.length && q.length ? (
+            <div className="alert alert-danger">
+              There isn't results with <b>{q}</b>
+            </div>
+          ) : null}
         </div>
       </div>
     </>
