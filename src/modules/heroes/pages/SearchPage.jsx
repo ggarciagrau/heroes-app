@@ -20,7 +20,7 @@ export const SearchPage = () => {
 
     const searchValue = searchText.trim();
 
-    if (searchValue.length < 1) return;
+    // if (searchValue.length < 1) return;
 
     navigate(`?q=${searchValue}`);
   };
@@ -54,19 +54,18 @@ export const SearchPage = () => {
           <h4>Results</h4>
           <hr />
 
-          {q.length == 0 ? (
-            <div className="alert alert-primary">Search a hero</div>
-          ) : null}
+          {!q.length && (
+            <div className="alert alert-primary animate__animated animate__fadeIn">Search a hero</div>
+          )}
 
-          {heroes.length
-            ? heroes.map((hero) => <HeroeCard key={hero.id} {...hero} />)
-            : null}
+          {!!heroes.length &&
+            heroes.map((hero) => <HeroeCard key={hero.id} {...hero} />)}
 
-          {!heroes.length && q.length ? (
-            <div className="alert alert-danger">
+          {!heroes.length && !!q.length && (
+            <div className="alert alert-danger animate__animated animate__fadeIn">
               There isn't results with <b>{q}</b>
             </div>
-          ) : null}
+          )}
         </div>
       </div>
     </>
