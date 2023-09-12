@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem(localStorageUserId);
-    dispatch({ type: types.login, payload: { id: "", name: "" } });
+    dispatch({ type: types.logout, payload: { id: "", name: "" } });
   };
 
   return (
