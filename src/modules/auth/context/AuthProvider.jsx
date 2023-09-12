@@ -16,7 +16,7 @@ const localStorageUserId = "user";
 const initializer = () => {
   try {
     const user = JSON.parse(localStorage.getItem(localStorageUserId));
-    return { ...initialState, logged: true, user };
+    if (user) return { ...initialState, logged: true, user };
   } catch {
     return initialState;
   }
