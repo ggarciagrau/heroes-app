@@ -7,7 +7,7 @@ export const HeroeCard = ({
   first_appearance,
   characters,
 }) => {
-  const heroImageUrn = `/assets/heroes/${id}.jpg`;
+  const heroImageUrn = `/heroes/${id}.jpg`;
 
   return (
     <div className="col animate__animated animate__fadeIn">
